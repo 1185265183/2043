@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.web.security.mapper.ResultsMapper" >
+  <resultMap id="BaseResultMap" type="cn.web.security.pojo.Results" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="projectid" property="projectid" jdbcType="INTEGER" />
+    <result column="projectname" property="projectname" jdbcType="VARCHAR" />
+    <result column="filepath" property="filepath" jdbcType="VARCHAR" />
+    <result column="resultid" property="resultid" jdbcType="INTEGER" />
+    <result column="line" property="line" jdbcType="INTEGER" />
+    <result column="risklevel" property="risklevel" jdbcType="INTEGER" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="rkey" property="rkey" jdbcType="VARCHAR" />
+    <result column="warning" property="warning" jdbcType="VARCHAR" />
+    <result column="suggestion" property="suggestion" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, projectid, projectname, filepath, resultid, line, risklevel, category, rkey, 
+    warning, suggestion
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.web.security.pojo.ResultsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from results
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from results
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from results
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.web.security.pojo.ResultsExample" >
+    delete from results
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.web.security.pojo.Results" >
+    insert into results (id, projectid, projectname, 
+      filepath, resultid, line, 
+      risklevel, category, rkey, 
+      warning, suggestion)
+    values (#{id,jdbcType=INTEGER}, #{projectid,jdbcType=INTEGER}, #{projectname,jdbcType=VARCHAR}, 
+      #{filepath,jdbcType=VARCHAR}, #{resultid,jdbcType=INTEGER}, #{line,jdbcType=INTEGER}, 
+      #{risklevel,jdbcType=INTEGER}, #{category,jdbcType=VARCHAR}, #{rkey,jdbcType=VARCHAR}, 
+      #{warning,jdbcType=VARCHAR}, #{suggestion,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.web.security.pojo.Results" >
+    insert into results
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="projectid != null" >
+        projectid,
+      </if>
+      <if test="projectname != null" >
+        projectname,
+      </if>
+      <if test="filepath != null" >
+        filepath,
+      </if>
+      <if test="resultid != null" >
+        resultid,
+      </if>
+      <if test="line != null" >
+        line,
+      </if>
+      <if test="risklevel != null" >
+        risklevel,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="rkey != null" >
+        rkey,
+      </if>
+      <if test="warning != null" >
+        warning,
+      </if>
+      <if test="suggestion != null" >
+        suggestion,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="projectid != null" >
+        #{projectid,jdbcType=INTEGER},
+      </if>
+      <if test="projectname != null" >
+        #{projectname,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="resultid != null" >
+        #{resultid,jdbcType=INTEGER},
+      </if>
+      <if test="line != null" >
+        #{line,jdbcType=INTEGER},
+      </if>
+      <if test="risklevel != null" >
+        #{risklevel,jdbcType=INTEGER},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="rkey != null" >
+        #{rkey,jdbcType=VARCHAR},
+      </if>
+      <if test="warning != null" >
+        #{warning,jdbcType=VARCHAR},
+      </if>
+      <if test="suggestion != null" >
+        #{suggestion,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.web.security.pojo.ResultsExample" resultType="java.lang.Integer" >
+    select count(*) from results
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update results
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectid != null" >
+        projectid = #{record.projectid,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectname != null" >
+        projectname = #{record.projectname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filepath != null" >
+        filepath = #{record.filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resultid != null" >
+        resultid = #{record.resultid,jdbcType=INTEGER},
+      </if>
+      <if test="record.line != null" >
+        line = #{record.line,jdbcType=INTEGER},
+      </if>
+      <if test="record.risklevel != null" >
+        risklevel = #{record.risklevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.category != null" >
+        category = #{record.category,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rkey != null" >
+        rkey = #{record.rkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.warning != null" >
+        warning = #{record.warning,jdbcType=VARCHAR},
+      </if>
+      <if test="record.suggestion != null" >
+        suggestion = #{record.suggestion,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update results
+    set id = #{record.id,jdbcType=INTEGER},
+      projectid = #{record.projectid,jdbcType=INTEGER},
+      projectname = #{record.projectname,jdbcType=VARCHAR},
+      filepath = #{record.filepath,jdbcType=VARCHAR},
+      resultid = #{record.resultid,jdbcType=INTEGER},
+      line = #{record.line,jdbcType=INTEGER},
+      risklevel = #{record.risklevel,jdbcType=INTEGER},
+      category = #{record.category,jdbcType=VARCHAR},
+      rkey = #{record.rkey,jdbcType=VARCHAR},
+      warning = #{record.warning,jdbcType=VARCHAR},
+      suggestion = #{record.suggestion,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.web.security.pojo.Results" >
+    update results
+    <set >
+      <if test="projectid != null" >
+        projectid = #{projectid,jdbcType=INTEGER},
+      </if>
+      <if test="projectname != null" >
+        projectname = #{projectname,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        filepath = #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="resultid != null" >
+        resultid = #{resultid,jdbcType=INTEGER},
+      </if>
+      <if test="line != null" >
+        line = #{line,jdbcType=INTEGER},
+      </if>
+      <if test="risklevel != null" >
+        risklevel = #{risklevel,jdbcType=INTEGER},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="rkey != null" >
+        rkey = #{rkey,jdbcType=VARCHAR},
+      </if>
+      <if test="warning != null" >
+        warning = #{warning,jdbcType=VARCHAR},
+      </if>
+      <if test="suggestion != null" >
+        suggestion = #{suggestion,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.web.security.pojo.Results" >
+    update results
+    set projectid = #{projectid,jdbcType=INTEGER},
+      projectname = #{projectname,jdbcType=VARCHAR},
+      filepath = #{filepath,jdbcType=VARCHAR},
+      resultid = #{resultid,jdbcType=INTEGER},
+      line = #{line,jdbcType=INTEGER},
+      risklevel = #{risklevel,jdbcType=INTEGER},
+      category = #{category,jdbcType=VARCHAR},
+      rkey = #{rkey,jdbcType=VARCHAR},
+      warning = #{warning,jdbcType=VARCHAR},
+      suggestion = #{suggestion,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
