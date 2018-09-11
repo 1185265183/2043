@@ -28,6 +28,8 @@ public class ProjectanalysisServiceImpl implements ProjectanalysisService {
 	@Override
 	public int getClassmentcount() {
 		// TODO Auto-generated method stub
+		//classmentMapper
+		System.out.println(444);
 		return 0;
 	}
 
