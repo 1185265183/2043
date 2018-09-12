@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import org.antlr.v4.runtime.RuleContext;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.stringtemplate.v4.compiler.CodeGenerator.list_return;
@@ -20,16 +21,23 @@ import  cn.web.security.cpputil.CPP14Parser.PostfixexpressionContext;
 import  cn.web.security.cpputil.CPP14Parser.SelectionstatementContext;
 import  cn.web.security.cpputil.CPP14Parser.SimpledeclarationContext;
 import cn.web.security.cpputil.CPP14Parser.StatementseqContext;
+import cn.web.security.cpputil.CPP14Parser.Static_assertdeclarationContext;
 import cn.web.security.cpputil.CPP14Parser.TranslationunitContext;
 
 
 /*获得当前扫描文件的信�?*/
 public class NodeCPP14Listener extends CPP14BaseListener{
-	public static int id=1;      //这个Id用于给结构�?�节点编号（递增�?
-	public static int funccid=1;       //用于给函数调用语句编�?
-	public static int assid=1;       //用于给赋值语句编�?
-	public static int varsize;   //该文件（.cpp）中包含多少个变量（全局、局部变量）
-	public static int funcsize;  //该文件（.cpp）中包含多少个函数（包括类中的函数）
+	public static int id;      //控制节点编号
+	public static int funccid;        
+	public static int assid;       
+	public static int varsize;   
+	public static int funcsize;   
+	public static int classmentcount; 
+	
+	
+	
+	
+	
 	public static CppFile cpp;       //用来记录当前输入文件的记录结�?
 	//public static List<ConNode> nodelist;  //记录文件中所有节点，函数从这里找属于自己的节点（目前是按照函数名）
 	
@@ -570,10 +578,10 @@ public class NodeCPP14Listener extends CPP14BaseListener{
 			if(varString.contains("(")) {
 				String varname = varString.split("=")[0];
 				String varinit = varString.split("=")[1];
-				varsize++;
+				//varsize++;
 				Var var = new Var(varsize, varname, nowpre, varinit, offunc);
 				cpp.filevarlist.add(var);
-				
+				varsize++;
 				
 			}else if(varString.contains("{")) {
 				//判断含有几个数组	
@@ -585,25 +593,27 @@ public class NodeCPP14Listener extends CPP14BaseListener{
 						if(i==size-1) {
 							String varname = liStrings[i].split("=")[0];
 							String varinit = liStrings[i].split("=")[1].replaceAll(";","");
-							varsize++;
+							//varsize++;
 							Var var = new Var(varsize, varname, nowpre, varinit, offunc);
 							cpp.filevarlist.add(var);
-							
+							varsize++;
 						}else {
 						String varname = liStrings[i].split("=")[0];
 						String varinit = liStrings[i].split("=")[1]+"}";
-						varsize++;
+						//varsize++;
 						Var var = new Var(varsize, varname, nowpre, varinit, offunc);
 						cpp.filevarlist.add(var);
+						varsize++;
 						}
 					}	
 				}else{
 					//只含有一个数�?
 					String varname  = varString.split("=")[0];
 					String varinit =varString.split("=")[1];
-					varsize++;
+					//varsize++;
 					Var var = new Var(varsize, varname, nowpre, varinit, offunc);
 					cpp.filevarlist.add(var);
+					varsize++;
 				}
 			}else{
 				
@@ -617,17 +627,18 @@ public class NodeCPP14Listener extends CPP14BaseListener{
 						String varname = temvar[0];
 						String varinit = temvar[1];
 						//System.out.println("变量名："+varname + "初�?�："+varinit);
-						varsize++;
+						//varsize++;
 						Var var = new Var(varsize, varname, nowpre, varinit, offunc);
 						cpp.filevarlist.add(var);
+						varsize++;
 					}else{
 						
 						String varname = vars[i];
 						//System.out.println("变量名："+varname);
-						varsize++;
+						//varsize++;
 						Var var = new Var(varsize, varname, nowpre, null, offunc);
 						cpp.filevarlist.add(var);
-						
+						varsize++;
 					}
 				}
 			}
@@ -638,7 +649,7 @@ public class NodeCPP14Listener extends CPP14BaseListener{
 	@Override
 	public void enterFunctiondefinition(FunctiondefinitionContext ctx){
 		super.enterFunctiondefinition(ctx);
-		funcsize++;    //函数数目+1
+		//funcsize++;    //函数数目+1
 		Integer funcid = funcsize;
 		//获取函数的修饰符 和返回�?�类型（后续�?要进�?步完善，多种修饰符）
 		String prefunction = ctx.declspecifierseq().getText();
@@ -701,7 +712,7 @@ public class NodeCPP14Listener extends CPP14BaseListener{
 				
 			}
 		
-		
+		funcsize++;    //函数数目+1
 		
 		
 		
@@ -1138,7 +1149,7 @@ public class NodeCPP14Listener extends CPP14BaseListener{
 	public void enterTranslationunit(TranslationunitContext ctx){
 		super.enterTranslationunit(ctx);
 		//System.out.println("�?始解�?!");	
-		varsize = 0;
+		//varsize = 0;
 		//funcsize = 0;
 		cpp=new CppFile();
 		//nodelist = new ArrayList<ConNode>();
@@ -1338,9 +1349,9 @@ public class NodeCPP14Listener extends CPP14BaseListener{
 		
 		
 		//根据方法和变量所属的类，将其回填到类中
-		int i=1;
+		
 		for(String name:nameSet){
-			Classment classment = new Classment(i,name);
+			Classment classment = new Classment(classmentcount,name);
 			for(Var var:cpp.filevarlist){
 				if(var instanceof ClassVar){
 					ClassVar classvar = (ClassVar)var;
@@ -1421,7 +1432,7 @@ public class NodeCPP14Listener extends CPP14BaseListener{
 				}
 			}
 			cpp.classlist.add(classment);
-		    i++;
+		    classmentcount++;
 		}
 		/*
 		System.out.println("类信息：类ID|类名|属性数|方法数");
@@ -1483,9 +1494,9 @@ public class NodeCPP14Listener extends CPP14BaseListener{
 				String ofclass = findclass(ctx);
 				String oflimit = findlimit(ctx);
 				
-				ClassFunc classFunc = new ClassFunc(funccid, name, prefunc, returntype, param, ofclass, oflimit);
+				ClassFunc classFunc = new ClassFunc(1, name, prefunc, returntype, param, ofclass, oflimit);
 				cpp.helpList.add(classFunc);
-				funccid++;
+				//funcsize++;
 				
 			}else if(ctx.getChild(1).getText().contains("(")){
 				//声明的函�?(拿到函数名，和对应权�?)
@@ -1515,9 +1526,9 @@ public class NodeCPP14Listener extends CPP14BaseListener{
 				String ofclass = findclass(ctx);
 				String oflimit = findlimit(ctx);
 				
-				ClassFunc classFunc = new ClassFunc(funccid, name, prefunc, returntype, param, ofclass, oflimit);
+				ClassFunc classFunc = new ClassFunc(1, name, prefunc, returntype, param, ofclass, oflimit);
 				cpp.helpList.add(classFunc);
-				funccid++;
+				//funcsize++;
 			}else{
 				String varString = ctx.getText();
 				String prevar = ctx.getChild(0).getText();
@@ -1636,16 +1647,17 @@ public class NodeCPP14Listener extends CPP14BaseListener{
 						String varname = temvar[0];
 						String varinit = temvar[1];
 						//System.out.println("变量名："+varname + "初�?�："+varinit);
-						varsize++;
+						//varsize++;
 						ClassVar classVar = new ClassVar(varsize, varname, nowpre, varinit, offunc, ofclass, oflimit);
 						cpp.filevarlist.add(classVar);
-						
+						varsize++;
 					}else{
 						String varname = vars[i];
 						//System.out.println("变量名："+varname);
-						varsize++;
+						//varsize++;
 						ClassVar classVar = new ClassVar(varsize, varname, nowpre, null, offunc, ofclass, oflimit);
 						cpp.filevarlist.add(classVar);
+						varsize++;
 					}
 				}
 				

@@ -32,7 +32,7 @@ import cn.web.security.cpputil.NodeCPP14Listener.Funccallstate;
 import cn.web.security.cpputil.NodeCPP14Listener.Var;
 import cn.web.security.pojo.Assign;
 import cn.web.security.pojo.Callfunction;
-import cn.web.security.pojo.Function;
+import cn.web.security.pojo.Functions;
 import cn.web.security.pojo.Node;
 import cn.web.security.pojo.Project;
 import cn.web.security.pojo.Results;
@@ -285,7 +285,7 @@ public class ProjectController {
 	
 	//根据指定ID，解析对应项目
 	@RequestMapping("/analysisProject/{projectid}")
-	public void analysisProject(@PathVariable int projectid){
+	public ModelAndView analysisProject(@PathVariable int projectid){
 			
 		//根据项目ID，获得项目的所在路径
 		Project project = projectService.getProjectById(projectid);
@@ -304,13 +304,19 @@ public class ProjectController {
 		}
 		//遍历源码文件路径，逐一进行解析，并将解析结果存储到数据库中
 		for(String path:pathList){
+			int classmentcount = projectanalysisService.getClassmentcount()+1;
+			int functioncount = projectanalysisService.getFunctioncount()+1;
+			int varcount = projectanalysisService.getVarcount()+1;
+			int nodecount = projectanalysisService.getNodecount()+1;
+			int assigncount = projectanalysisService.getAssigncount()+1;
+			int callfunctioncount = projectanalysisService.getCallfunctioncount()+1;
 			
-			
+			System.out.println("当前起始id："+classmentcount+"|"+functioncount+"|"+varcount+"|"+nodecount+"|"+assigncount+"|"+callfunctioncount);
 			System.out.println("当前输入文件的路径:"+path);
 			//App.jiexi(path,100);
-				
+			
 			//获得解析结果，存入数据库（  或者修改App.jiexi()方法，在该方法中将解析结果存入数据库  ）
-			CppFile cpp = App.jiexi(path,101);   //需要传入每个表当前的起始id
+			CppFile cpp = App.jiexi(path,classmentcount,functioncount,varcount,nodecount,assigncount,callfunctioncount);   //需要传入每个表当前的起始id
 			
 			System.out.println("*************************************解析结束*******************************************");
 			
@@ -348,10 +354,10 @@ public class ProjectController {
 			//处理方法对象的格式，将其封装到对应的表中
 			//System.out.println(cpp.filefunclist.size());
 			
-			List<Function> functionlist = new ArrayList<Function>();
+			List<Functions> functionlist = new ArrayList<Functions>();
 			for(Func func:cpp.filefunclist) {
 				
-				cn.web.security.pojo.Function function = new cn.web.security.pojo.Function();
+				cn.web.security.pojo.Functions function = new cn.web.security.pojo.Functions();
 				function.setId(func.getFuncid());
 				function.setName(func.getFuncname());                //只是函数名
 				function.setModifier(func.getPrefunc());
@@ -377,11 +383,13 @@ public class ProjectController {
 				functionlist.add(function);
 				
 				//把该函数插入到数据库函数表中
-				
 			}
+			projectanalysisService.addFunction(functionlist);
+			
+			
 			
 			System.out.println("*******************************打印函数表*********************************");
-			for(Function function:functionlist) {
+			for(Functions function:functionlist) {
 				System.out.println(function.getId()+"|"+function.getName()+"|"+function.getModifier()+"|"+function.getReturntype()+"|"+function.getParameter()+"|"+function.getClassid()+"|"+function.getProjectid()+"|"+function.getPermission());
 			}
 			
@@ -403,13 +411,13 @@ public class ProjectController {
 				
 				String funcname = var.getOffunc();                  // 1 \ 2 \ 函数名
 				//根据函数名(带形参)和项目id，找到该函数的id
-				for(Function function:functionlist) {
-					/*
-					System.out.println("**********************************");
-					System.out.println(funcname);     //可能是    1   2   main()   Game::GameOver()    main(void)
-					System.out.println(function.getName()+function.getParameter());        //单纯的 函数名  + 形参列表  （不带括号）
-					System.out.println("**********************************");
-					*/
+				for(Functions function:functionlist) {
+					
+					//System.out.println("**********************************");
+					//System.out.println(funcname);     //可能是    1   2   main()   Game::GameOver()    main(void)
+					//System.out.println(function.getName()+function.getParameter());        //单纯的 函数名  + 形参列表  （不带括号）
+					//System.out.println("**********************************");
+					
 					if(funcname.equals("1")||funcname.equals("2")) {
 						var2.setFunctionid(0);
 						break;
@@ -446,6 +454,9 @@ public class ProjectController {
 				varlist.add(var2);
 				//将该变量插入到数据库的变量表中
 			}
+			projectanalysisService.addVar(varlist);
+			
+			
 			System.out.println("*******************************打印变量表*********************************");
 			for(cn.web.security.pojo.Var var:varlist) {
 				System.out.println(var.getId()+"|"+var.getName()+"|"+var.getModifier()+"|"+var.getType()+"|"+var.getValue()+"|"+var.getFunctionid()+"|"+var.getClassid()+"|"+var.getProjectid());
@@ -465,14 +476,14 @@ public class ProjectController {
 				node2.setId(node.getNodeid());
 				node2.setName(node.getControlname());
 				node2.setFatherid(node.getFatherid());
-				node2.setCondition(node.getCondition());
+				node2.setNodecondition(node.getCondition());
 				node2.setCasecondition(node.getCasecondition());
 				node2.setPosition(node.getPosition());
 				node2.setProjectid(projectid);
 				
 				String funcname = node.getOffunc();
 				//根据函数名(带形参)和项目id，找到该函数的id
-				for(Function function:functionlist) {
+				for(Functions function:functionlist) {
 					if(funcname.equals("1")||funcname.equals("2")) {
 						node2.setFunctionid(0);
 						break;
@@ -495,9 +506,12 @@ public class ProjectController {
 				nodelist.add(node2);
 				//把该节点插入到数据库中的节点表中
 			}
+			projectanalysisService.addNode(nodelist);
+			
+			
 			System.out.println("*******************************打印节点表*********************************");
 			for(Node node:nodelist) {
-				System.out.println(node.getId()+"|"+node.getFatherid()+"|"+node.getName()+"|"+node.getCondition()+"|"+node.getFunctionid()+"|"+node.getPosition()+"|"+node.getCasecondition()+"|"+node.getProjectid());
+				System.out.println(node.getId()+"|"+node.getFatherid()+"|"+node.getName()+"|"+node.getNodecondition()+"|"+node.getFunctionid()+"|"+node.getPosition()+"|"+node.getCasecondition()+"|"+node.getProjectid());
 			}
 			
 			
@@ -530,7 +544,7 @@ public class ProjectController {
 				
 				//根据函数名(带形参)和项目id，找到该函数的id
 				String funcname = assignstate.getOffunc();
-				for(Function function:functionlist) {
+				for(Functions function:functionlist) {
 					if(funcname.equals("1")||funcname.equals("2")) {
 						assign.setFunctionid(0);
 						break;
@@ -553,7 +567,7 @@ public class ProjectController {
 				//把该赋值语句插入到数据库中的赋值语句表中
 				
 			}
-			
+			projectanalysisService.addAssign(assignlist);
 
 			
 			//处理函数调用语句对象的格式，将其封装到对应的表中
@@ -570,8 +584,9 @@ public class ProjectController {
 				
 				//确定被调用函数的id
 				String funcname1 = funccallstate.getFuncname();       //只是单纯的函数名
-				for(Function function:functionlist) {                   //重名问题不容易解决（必须解决 ，+形参列表进行解决）
-					if(funcname1.equals(function.getName()+function.getParameter())) {
+				for(Functions function:functionlist) {                   //重名问题不容易解决（必须解决 ，+形参列表进行解决）
+					//if(funcname1.equals(function.getName()+function.getParameter())) {
+					if(funcname1.equals(function.getName())) {	
 						callfunction.setBefunctionid(function.getId());
 						break;
 					}
@@ -581,7 +596,7 @@ public class ProjectController {
 				
 				//根据函数名(带形参)和项目id，找到该函数的id
 				String funcname2 = funccallstate.getOffunc();
-				for(Function function:functionlist) {
+				for(Functions function:functionlist) {
 					if(funcname2.equals("1")||funcname2.equals("2")) {
 						callfunction.setFunctionid(0);
 						break;
@@ -604,7 +619,14 @@ public class ProjectController {
 				//将该函数调用语句对象存储到数据库中的函数调用表
 			}
 			
+			projectanalysisService.addCallfunction(callfunctionlist);
 		}	
+		//-----------------------以上的部分已将解析得到的结果存入数据库中--------------------------
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("projectid", projectid);
+		mv.setViewName("classResult");
+		return mv;
+		
 	}
 	
 	static String getclassname(String ofclass) {

@@ -294,73 +294,73 @@ public class NodeExample {
             return (Criteria) this;
         }
 
-        public Criteria andConditionIsNull() {
-            addCriterion("condition is null");
+        public Criteria andNodeconditionIsNull() {
+            addCriterion("nodecondition is null");
             return (Criteria) this;
         }
 
-        public Criteria andConditionIsNotNull() {
-            addCriterion("condition is not null");
+        public Criteria andNodeconditionIsNotNull() {
+            addCriterion("nodecondition is not null");
             return (Criteria) this;
         }
 
-        public Criteria andConditionEqualTo(String value) {
-            addCriterion("condition =", value, "condition");
+        public Criteria andNodeconditionEqualTo(String value) {
+            addCriterion("nodecondition =", value, "nodecondition");
             return (Criteria) this;
         }
 
-        public Criteria andConditionNotEqualTo(String value) {
-            addCriterion("condition <>", value, "condition");
+        public Criteria andNodeconditionNotEqualTo(String value) {
+            addCriterion("nodecondition <>", value, "nodecondition");
             return (Criteria) this;
         }
 
-        public Criteria andConditionGreaterThan(String value) {
-            addCriterion("condition >", value, "condition");
+        public Criteria andNodeconditionGreaterThan(String value) {
+            addCriterion("nodecondition >", value, "nodecondition");
             return (Criteria) this;
         }
 
-        public Criteria andConditionGreaterThanOrEqualTo(String value) {
-            addCriterion("condition >=", value, "condition");
+        public Criteria andNodeconditionGreaterThanOrEqualTo(String value) {
+            addCriterion("nodecondition >=", value, "nodecondition");
             return (Criteria) this;
         }
 
-        public Criteria andConditionLessThan(String value) {
-            addCriterion("condition <", value, "condition");
+        public Criteria andNodeconditionLessThan(String value) {
+            addCriterion("nodecondition <", value, "nodecondition");
             return (Criteria) this;
         }
 
-        public Criteria andConditionLessThanOrEqualTo(String value) {
-            addCriterion("condition <=", value, "condition");
+        public Criteria andNodeconditionLessThanOrEqualTo(String value) {
+            addCriterion("nodecondition <=", value, "nodecondition");
             return (Criteria) this;
         }
 
-        public Criteria andConditionLike(String value) {
-            addCriterion("condition like", value, "condition");
+        public Criteria andNodeconditionLike(String value) {
+            addCriterion("nodecondition like", value, "nodecondition");
             return (Criteria) this;
         }
 
-        public Criteria andConditionNotLike(String value) {
-            addCriterion("condition not like", value, "condition");
+        public Criteria andNodeconditionNotLike(String value) {
+            addCriterion("nodecondition not like", value, "nodecondition");
             return (Criteria) this;
         }
 
-        public Criteria andConditionIn(List<String> values) {
-            addCriterion("condition in", values, "condition");
+        public Criteria andNodeconditionIn(List<String> values) {
+            addCriterion("nodecondition in", values, "nodecondition");
             return (Criteria) this;
         }
 
-        public Criteria andConditionNotIn(List<String> values) {
-            addCriterion("condition not in", values, "condition");
+        public Criteria andNodeconditionNotIn(List<String> values) {
+            addCriterion("nodecondition not in", values, "nodecondition");
             return (Criteria) this;
         }
 
-        public Criteria andConditionBetween(String value1, String value2) {
-            addCriterion("condition between", value1, value2, "condition");
+        public Criteria andNodeconditionBetween(String value1, String value2) {
+            addCriterion("nodecondition between", value1, value2, "nodecondition");
             return (Criteria) this;
         }
 
-        public Criteria andConditionNotBetween(String value1, String value2) {
-            addCriterion("condition not between", value1, value2, "condition");
+        public Criteria andNodeconditionNotBetween(String value1, String value2) {
+            addCriterion("nodecondition not between", value1, value2, "nodecondition");
             return (Criteria) this;
         }
 

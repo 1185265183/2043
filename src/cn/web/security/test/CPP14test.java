@@ -15,7 +15,7 @@ import cn.web.security.cpputil.NodeCPP14Listener.Funccallstate;
 import cn.web.security.cpputil.NodeCPP14Listener.Var;
 import cn.web.security.pojo.Assign;
 import cn.web.security.pojo.Callfunction;
-import cn.web.security.pojo.Function;
+import cn.web.security.pojo.Functions;
 import cn.web.security.pojo.Node;
 
 
@@ -54,7 +54,7 @@ public class CPP14test {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		CppFile cpp = App.jiexi("E:\\Software_security\\uploadspace\\项目1.0\\plane.cpp",101);   //需要传入每个表当前的起始id
+		CppFile cpp = App.jiexi("E:\\Software_security\\uploadspace\\项目1.0\\plane.cpp",1,1,1,1,1,1);   //需要传入每个表当前的起始id
 		
 		System.out.println("*************************************解析结束*******************************************");
 		
@@ -75,19 +75,20 @@ public class CPP14test {
 			//把该类 插入到  类表中
 		}
 		
+		/*
 		System.out.println("*******************************打印类表*********************************");
 		for(cn.web.security.pojo.Classment classment:classlist) {
 			System.out.println(classment.getId()+"|"+classment.getName()+"|"+classment.getFather()+"|"+classment.getProjectid()+"|"+classment.getType());
 		}
-		
+		*/
 
 		//处理方法对象的格式，将其封装到对应的表中
 		System.out.println(cpp.filefunclist.size());
 		
-		List<Function> functionlist = new ArrayList<Function>();
+		List<Functions> functionlist = new ArrayList<Functions>();
 		for(Func func:cpp.filefunclist) {
 			
-			cn.web.security.pojo.Function function = new cn.web.security.pojo.Function();
+			cn.web.security.pojo.Functions function = new cn.web.security.pojo.Functions();
 			function.setId(func.getFuncid());
 			function.setName(func.getFuncname());                //只是函数名
 			function.setModifier(func.getPrefunc());
@@ -115,12 +116,12 @@ public class CPP14test {
 			//把该函数插入到数据库函数表中
 			
 		}
-		
+		/*
 		System.out.println("*******************************打印函数表*********************************");
-		for(Function function:functionlist) {
+		for(Functions function:functionlist) {
 			System.out.println(function.getId()+"|"+function.getName()+"|"+function.getModifier()+"|"+function.getReturntype()+"|"+function.getParameter()+"|"+function.getClassid()+"|"+function.getProjectid()+"|"+function.getPermission());
 		}
-		
+		*/
 		//处理变量对象的格式，将其封装到对应的表中
 		System.out.println(cpp.filevarlist.size());
 		List<cn.web.security.pojo.Var> varlist = new ArrayList<cn.web.security.pojo.Var>();
@@ -139,7 +140,7 @@ public class CPP14test {
 			
 			String funcname = var.getOffunc();                  // 1 \ 2 \ 函数名
 			//根据函数名(带形参)和项目id，找到该函数的id
-			for(Function function:functionlist) {
+			for(Functions function:functionlist) {
 				/*
 				System.out.println("**********************************");
 				System.out.println(funcname);     //可能是    1   2   main()   Game::GameOver()    main(void)
@@ -182,11 +183,12 @@ public class CPP14test {
 			varlist.add(var2);
 			//将该变量插入到数据库的变量表中
 		}
+		/*
 		System.out.println("*******************************打印变量表*********************************");
 		for(cn.web.security.pojo.Var var:varlist) {
 			System.out.println(var.getId()+"|"+var.getName()+"|"+var.getModifier()+"|"+var.getType()+"|"+var.getValue()+"|"+var.getFunctionid()+"|"+var.getClassid()+"|"+var.getProjectid());
 		}
-		
+		*/
 		
 		
 		
@@ -201,14 +203,14 @@ public class CPP14test {
 			node2.setId(node.getNodeid());
 			node2.setName(node.getControlname());
 			node2.setFatherid(node.getFatherid());
-			node2.setCondition(node.getCondition());
+			node2.setNodecondition(node.getCondition());
 			node2.setCasecondition(node.getCasecondition());
 			node2.setPosition(node.getPosition());
 			node2.setProjectid(projectid);
 			
 			String funcname = node.getOffunc();
 			//根据函数名(带形参)和项目id，找到该函数的id
-			for(Function function:functionlist) {
+			for(Functions function:functionlist) {
 				if(funcname.equals("1")||funcname.equals("2")) {
 					node2.setFunctionid(0);
 					break;
@@ -231,11 +233,12 @@ public class CPP14test {
 			nodelist.add(node2);
 			//把该节点插入到数据库中的节点表中
 		}
+		/*
 		System.out.println("*******************************打印节点表*********************************");
 		for(Node node:nodelist) {
-			System.out.println(node.getId()+"|"+node.getFatherid()+"|"+node.getName()+"|"+node.getCondition()+"|"+node.getFunctionid()+"|"+node.getPosition()+"|"+node.getCasecondition()+"|"+node.getProjectid());
+			System.out.println(node.getId()+"|"+node.getFatherid()+"|"+node.getName()+"|"+node.getNodecondition()+"|"+node.getFunctionid()+"|"+node.getPosition()+"|"+node.getCasecondition()+"|"+node.getProjectid());
 		}
-		
+		*/
 		
 		
 		//处理赋值语句对象的格式，将其封装到对应的表中
@@ -259,14 +262,17 @@ public class CPP14test {
 					break;
 				}
 			}
-
+			
+			
+			
+			
 			//确定所属节点的id
 			assign.setNodeid(assignstate.getFatherid());
 			
 			
 			//根据函数名(带形参)和项目id，找到该函数的id
 			String funcname = assignstate.getOffunc();
-			for(Function function:functionlist) {
+			for(Functions function:functionlist) {
 				if(funcname.equals("1")||funcname.equals("2")) {
 					assign.setFunctionid(0);
 					break;
@@ -291,7 +297,7 @@ public class CPP14test {
 		}
 		
 
-		
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		//处理函数调用语句对象的格式，将其封装到对应的表中
 		System.out.println(cpp.funccalllist.size());
 		List<Callfunction> callfunctionlist = new ArrayList<Callfunction>();
@@ -304,20 +310,29 @@ public class CPP14test {
 			callfunction.setCasecondition(funccallstate.getCasecondition());
 			callfunction.setProjectid(projectid);
 			
-			//确定被调用函数的id
+			//确定被调用函数的id、
+			//System.out.println("3333333333333333333333333333333333333333333");
 			String funcname1 = funccallstate.getFuncname();       //只是单纯的函数名
-			for(Function function:functionlist) {                   //重名问题不容易解决（必须解决 ，+形参列表进行解决）
-				if(funcname1.equals(function.getName()+function.getParameter())) {
+			//System.out.println("被调用的函数名（仅名字）："+funcname1);
+			
+			for(Functions function:functionlist) {                   //重名问题不容易解决（必须解决 ，+形参列表进行解决）
+				
+				//if(funcname1.equals(function.getName()+function.getParameter())) {
+				if(funcname1.equals(function.getName())) {
 					callfunction.setBefunctionid(function.getId());
+					//System.out.println("成功找到被调用函数的id");
 					break;
 				}
 			}
+			//System.out.println("3333333333333333333333333333333333333333333");
+			
+			
 			//确定所属节点的id
 			callfunction.setNodeid(funccallstate.getFatherid());
 			
 			//根据函数名(带形参)和项目id，找到该函数的id
 			String funcname2 = funccallstate.getOffunc();
-			for(Function function:functionlist) {
+			for(Functions function:functionlist) {
 				if(funcname2.equals("1")||funcname2.equals("2")) {
 					callfunction.setFunctionid(0);
 					break;

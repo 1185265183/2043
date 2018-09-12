@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="fatherid" property="fatherid" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="condition" property="condition" jdbcType="VARCHAR" />
+    <result column="nodecondition" property="nodecondition" jdbcType="VARCHAR" />
     <result column="functionid" property="functionid" jdbcType="INTEGER" />
     <result column="position" property="position" jdbcType="INTEGER" />
     <result column="casecondition" property="casecondition" jdbcType="VARCHAR" />
@@ -70,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, fatherid, name, condition, functionid, position, casecondition, projectid
+    id, fatherid, name, nodecondition, functionid, position, casecondition, projectid
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.web.security.pojo.NodeExample" >
     select
@@ -104,10 +104,10 @@
   </delete>
   <insert id="insert" parameterType="cn.web.security.pojo.Node" >
     insert into node (id, fatherid, name, 
-      condition, functionid, position, 
+      nodecondition, functionid, position, 
       casecondition, projectid)
     values (#{id,jdbcType=INTEGER}, #{fatherid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{condition,jdbcType=VARCHAR}, #{functionid,jdbcType=INTEGER}, #{position,jdbcType=INTEGER}, 
+      #{nodecondition,jdbcType=VARCHAR}, #{functionid,jdbcType=INTEGER}, #{position,jdbcType=INTEGER}, 
       #{casecondition,jdbcType=VARCHAR}, #{projectid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.web.security.pojo.Node" >
@@ -122,8 +122,8 @@
       <if test="name != null" >
         name,
       </if>
-      <if test="condition != null" >
-        condition,
+      <if test="nodecondition != null" >
+        nodecondition,
       </if>
       <if test="functionid != null" >
         functionid,
@@ -148,8 +148,8 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="condition != null" >
-        #{condition,jdbcType=VARCHAR},
+      <if test="nodecondition != null" >
+        #{nodecondition,jdbcType=VARCHAR},
       </if>
       <if test="functionid != null" >
         #{functionid,jdbcType=INTEGER},
@@ -183,8 +183,8 @@
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.condition != null" >
-        condition = #{record.condition,jdbcType=VARCHAR},
+      <if test="record.nodecondition != null" >
+        nodecondition = #{record.nodecondition,jdbcType=VARCHAR},
       </if>
       <if test="record.functionid != null" >
         functionid = #{record.functionid,jdbcType=INTEGER},
@@ -208,7 +208,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       fatherid = #{record.fatherid,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
-      condition = #{record.condition,jdbcType=VARCHAR},
+      nodecondition = #{record.nodecondition,jdbcType=VARCHAR},
       functionid = #{record.functionid,jdbcType=INTEGER},
       position = #{record.position,jdbcType=INTEGER},
       casecondition = #{record.casecondition,jdbcType=VARCHAR},
@@ -226,8 +226,8 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="condition != null" >
-        condition = #{condition,jdbcType=VARCHAR},
+      <if test="nodecondition != null" >
+        nodecondition = #{nodecondition,jdbcType=VARCHAR},
       </if>
       <if test="functionid != null" >
         functionid = #{functionid,jdbcType=INTEGER},
@@ -248,7 +248,7 @@
     update node
     set fatherid = #{fatherid,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
-      condition = #{condition,jdbcType=VARCHAR},
+      nodecondition = #{nodecondition,jdbcType=VARCHAR},
       functionid = #{functionid,jdbcType=INTEGER},
       position = #{position,jdbcType=INTEGER},
       casecondition = #{casecondition,jdbcType=VARCHAR},
