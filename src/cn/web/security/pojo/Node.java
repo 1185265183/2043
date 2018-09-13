@@ -7,7 +7,7 @@ public class Node {
 
     private String name;
 
-    private String condition;
+    private String nodecondition;
 
     private Integer functionid;
 
@@ -41,12 +41,12 @@ public class Node {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getCondition() {
-        return condition;
+    public String getNodecondition() {
+        return nodecondition;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition == null ? null : condition.trim();
+    public void setNodecondition(String nodecondition) {
+        this.nodecondition = nodecondition == null ? null : nodecondition.trim();
     }
 
     public Integer getFunctionid() {

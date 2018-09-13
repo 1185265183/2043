@@ -1,6 +1,6 @@
 package cn.web.security.pojo;
 
-public class Function {
+public class Functions {
     private Integer id;
 
     private String name;

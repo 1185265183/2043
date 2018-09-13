@@ -29,16 +29,20 @@ public class App {
 	
 	
 	
-	public static CppFile jiexi(String fileName,int funcsize) {
+	public static CppFile jiexi(String fileName,int classmentcount,int funcsize,int varid,int conid,int assid,int callid) {
+		
 		String grammarName = "CPP14";                     
 		String startRuleName = "translationunit";
 		File file = new File(fileName);
 		ParseTreeListener listener = new NodeCPP14Listener();
 		
 		
-		
-		NodeCPP14Listener.funcsize=funcsize;
-		
+		NodeCPP14Listener.classmentcount=classmentcount; //用来给类编号
+		NodeCPP14Listener.funcsize=funcsize;       //用来给函数编号
+		NodeCPP14Listener.id = conid;
+		NodeCPP14Listener.varsize = varid;
+		NodeCPP14Listener.assid = assid;
+		NodeCPP14Listener.funccid =callid;
 		
 		
 		walk(grammarName, file.getAbsolutePath(), startRuleName, listener);

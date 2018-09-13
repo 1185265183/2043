@@ -13,9 +13,9 @@ public class Project {
 
     private String path;
 
-    private Integer ownerid=0;
+    private Integer ownerid;
 
-    private Integer flagbit=1;
+    private Integer flagbit;
 
     public Integer getId() {
         return id;
