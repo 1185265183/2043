@@ -3,7 +3,6 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
 <nav class="navbar navbar-default">
     <div class="container">
         <!--小屏幕导航按钮和logo-->
@@ -19,12 +18,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <!--导航-->
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li ><a href="index.html"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;后台首页</a></li>
+                <li ><a href="index.jsp"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;后台首页</a></li>
                 <li><a href="${pageContext.request.contextPath}/project/queryProjects1"><span class="glyphicon glyphicon-blackboard"></span>&nbsp;&nbsp;项目解析</a></li>
                 <li><a href="content.html"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;内容管理</a></li>
                 <li><a href="tag.html"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;标签管理</a></li>
                   <li class="dropdown ">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;项目管理<span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;我的管理<span class="caret"></span></a>
                    <ul class="dropdown-menu">
                  <li><a href="${pageContext.request.contextPath}/project/queryProjects">项目管理</span></a></li>
                   <li><a href="${pageContext.request.contextPath}/rules/showall">知识库管理</span></a></li>
@@ -50,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <li><a href="index.html"><span class="glyphicon glyphicon-heart"></span>&nbsp;&nbsp;我的收藏</a></li>
                     </ul>
                 </li>
-                <li><a href="#bbs"><span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;退出</a></li>
+                <li><a href="${pageContext.request.contextPath}/Loginout"><span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;退出</a></li>
             </ul>
         </div>
         <!--导航-->

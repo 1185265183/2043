@@ -11,69 +11,47 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
     <title>bootstrap项目实战</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/bootstrap-maizi.css"/>
+  <link rel="stylesheet"
+	href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/mycss/loading.css" />
+<link rel="stylesheet" href="assets/css/ace.min.css" />
+<link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+
+<script src="assets/js/ace-extra.min.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/bootstrap-maizi.css" />
 </head>
 <body>
 <!--导航-->
-<nav class="navbar navbar-default">
-    <div class="container">
-        <!--小屏幕导航按钮和logo-->
-        <div class="navbar-header">
-            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="index.html" class="navbar-brand">软件评估平台</a>
-        </div>
-        <!--小屏幕导航按钮和logo-->
-        <!--导航-->
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="index.html"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;后台首页</a></li>
-                <li><a href="user_list.html"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;项目管理</a></li>
-                <li><a href="content.html"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;内容管理</a></li>
-                <li><a href="tag.html"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;标签管理</a></li>
-                <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">项目管理<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="${pageContext.request.contextPath}/project/queryProjects">项目管理</span></a></li>
-                  <li><a href="${pageContext.request.contextPath}/rules/showall">知识库管理</span></a></li>
-                  <!--<li><a href="#">Something else here</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>-->
-                </ul>
-              </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        admin
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dLabel">
-                        <li><a href="index.html"><span class="glyphicon glyphicon-screenshot"></span>&nbsp;&nbsp;前台首页</a></li>
-                        <li><a href="index.html"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;个人主页</a></li>
-                        <li><a href="index.html"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;个人设置</a></li>
-                        <li><a href="index.html"><span class="glyphicon glyphicon-credit-card"></span>&nbsp;&nbsp;账户中心</a></li>
-                        <li><a href="index.html"><span class="glyphicon glyphicon-heart"></span>&nbsp;&nbsp;我的收藏</a></li>
-                    </ul>
-                </li>
-                <li><a href="#bbs"><span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;退出</a></li>
-            </ul>
-        </div>
-        <!--导航-->
-
-    </div>
-</nav>
-<!--导航-->
-
+<!-- Loading -->
+	<div class="loader1">
+		<i></i><i></i>
+	</div>
+	<div class="loading" align="center">加载中，请稍候 ...</div>
+	<!-- Loading Ends -->
+	<jsp:include page="header.jsp"></jsp:include>
 <!--警告框-->
-<div class="container">
-    <div class="row">
+<div class="main-container"  id="main-container">
+          <script type="text/javascript">
+			try {
+				ace.settings.check('main-container', 'fixed')
+			} catch (e) {
+			}
+		</script>
+		<div class="main-container-inner">
+			<a class="menu-toggler" id="menu-toggler" href="#"> <span
+				class="menu-text"></span>
+			</a>
+					<div class="col-md-10 col-md-offset-1">
+
+
+						<div class="page-content">
+							
+
+    <div class="row" type="0" id="div">
         <div class="col-md-12">
             <div class="alert alert-danger alert-dismissible fade in" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -254,7 +232,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
     </div>
 </div>
-
+</div>
+</div>
+</div>
 
 
 <!--footer-->
@@ -272,8 +252,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!--footer-->
 
 
-<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+		window.jQuery
+				|| document
+						.write("<script src='assets/js/jquery-2.0.3.min.js'>"
+								+ "<"+"/script>");
+	</script>
+	<script src="${pageContext.request.contextPath}/js/myjs/loading.js"></script>
+	<!-- <![endif]-->
+	<script src="layer/layer.js"></script>
+	<script type="text/javascript">
+		if ("ontouchend" in document)
+			document
+					.write("<script src='assets/js/jquery.mobile.custom.min.js'>"
+							+ "<"+"/script>");
+	</script>
+	<script src="assets/js/bootstrap.min.js"></script>
+	<script src="assets/js/typeahead-bs2.min.js"></script>
+	 
+	<!-- page specific plugin scripts -->
+
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/jquery.dataTables.bootstrap.js"></script>
+
+	<!-- ace scripts -->
+
+	<script src="assets/js/ace-elements.min.js"></script>
+	<script src="assets/js/ace.min.js"></script>
+
+	<script type="text/javascript">
+		$(function() {
+			var a = ($("#div").attr("type"));
+			if (a == "0") {
+				$(".navbar-nav li").removeClass("active");
+				$(".navbar-nav li").eq(0).addClass("active");
+			}
+		});
+	</script>
 <script src="js/Chart.js"></script>
 <script src="js/script.js"></script>
 </body>

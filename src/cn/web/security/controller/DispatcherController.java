@@ -59,7 +59,13 @@ public class DispatcherController {
 		
 		return result;
 	}
-		
+ //注销方法
+   @RequestMapping("/Loginout")
+   public String Loginout(HttpSession session){
+       //通过session.invalidata()方法来注销当前的session
+       session.invalidate();
+       return "login";
+   }
 	
 
 }
