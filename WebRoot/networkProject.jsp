@@ -68,7 +68,7 @@ th {
 			</a>
 			<!--导航-->
 
-			<div type="1" id="div">
+			<div type="2" id="div">
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1">
 						<div class="page-content">
@@ -82,8 +82,8 @@ th {
 										}
 									</script>
 									<ul class="breadcrumb">
-										<li><i class="glyphicon glyphicon-blackboard"></i> <a
-											href="${pageContext.request.contextPath}/project/queryProjects1">项目解析</a>
+										<li><i class="glyphicon  glyphicon-list-alt"></i> <a
+											href="${pageContext.request.contextPath}/project/queryProjects2">软件网络构建与特性分析</a>
 										</li>
 										<li class="active">项目列表</li>
 									</ul>
@@ -94,7 +94,7 @@ th {
 
 							<div class="forms">
 								<form id="form_query"
-									action="${pageContext.request.contextPath}/project/queryProjects1"
+									action="${pageContext.request.contextPath}/project/queryProjects2"
 									method="post">
 									<input id="page" name="pageNum" type="hidden" value="1" />
 								</form>
@@ -124,12 +124,11 @@ th {
 													<td title="${project.description}">${project.description}</td>
 													<td title="${project.ownerid}">${project.ownerid}</td>
 													<td title="${project.versionid}">${project.versionid}</td>
-													
 													<td title="${project.path}">${project.path}</td>
 													<td>
 														<div class="btn-group">
 															<button id="btn" type="button" projectid="${project.id}"
-																class="btn btn-default  btn-primary">解析</button>
+																class="btn btn-default  btn-primary">网络构建分析</button>
 														</div>
 													</td>
 												</tr>
@@ -206,9 +205,9 @@ th {
 					<script type="text/javascript">
 						$(function() {
 							var a = ($("#div").attr("type"));
-							if (a == "1") {
+							if (a == "2") {
 								$(".navbar-nav li").removeClass("active");
-								$(".navbar-nav li").eq(1).addClass("active");
+								$(".navbar-nav li").eq(2).addClass("active");
 							}
 							$(".btn-group button")
 									.click(
@@ -216,12 +215,12 @@ th {
 												var projectid = $(this).attr(
 														"projectid");
 												loadingIndex = layer.msg(
-														'解析中，请稍候...', {
+														'分析中，请稍候...', {
 															icon : 16
 														});
-												window.location.href = "${pageContext.request.contextPath}/projectAnalysis/analysisProject?projectid="
+												window.location.href = "${pageContext.request.contextPath}/network/buildgraph_01?projectid="
 														+ projectid;
-												
+											
 											});
 
 						});

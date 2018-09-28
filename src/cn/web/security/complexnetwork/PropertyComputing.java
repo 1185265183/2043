@@ -9,9 +9,15 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
+import org.stringtemplate.v4.compiler.CodeGenerator.list_return;
+
+import com.sun.jndi.cosnaming.CNCtx;
+
 import cn.web.security.buildgraph.DiGraph;
 import cn.web.security.buildgraph.LinkedQueue;
 import cn.web.security.buildgraph.VertexColor;
+import cn.web.security.pojo.Networkmetrics;
+import cn.web.security.pojo.Nodemetrics;
 
 public class PropertyComputing {
 	
@@ -33,7 +39,7 @@ public class PropertyComputing {
 		 * 计算所有节点的相关度量，并存入数据库
 		 * 该函数之前要调用PropertyComputing(DiGraph<String> graph,PropertyContainer pc)
 		 */
-		public void getNodeMetrics(){
+		public List<Nodemetrics> getNodeMetrics(int projectid){
 			/////////以下全是节点度量///////////////
 			System.out.println("开始计算节点级别的复杂网络度量");
 			
@@ -70,7 +76,7 @@ public class PropertyComputing {
 			
 			String vertexName = null;
 			
-			List<NodeMetrics> nodeMetricsList = new LinkedList<NodeMetrics>();               //顶点属性集
+			List<Nodemetrics> nodeMetricsList = new LinkedList<Nodemetrics>();               //顶点属性集
 			
 			while(iter.hasNext()){
 				
@@ -135,16 +141,32 @@ public class PropertyComputing {
 					System.out.println("节点："+vertexName+"不存在");
 				}
 				*/
+                Nodemetrics nodeMetrics = new Nodemetrics();
+				
+				nodeMetrics.setDegree(degree);
+				nodeMetrics.setDegreecentrality(degreeCentrality);
+				nodeMetrics.setNodedmnc(nodeDMNC);
+				nodeMetrics.setIndegree(inDegree);
+				nodeMetrics.setOutdegree(outDegree);
+				nodeMetrics.setNodeinfluenceregion(nodeInfluenceRegion);
+				nodeMetrics.setNodemnc(nodeMNC);
+				nodeMetrics.setNodebc(nodeBC);
+				nodeMetrics.setNodecc(nodeCC);
+				nodeMetrics.setNodecore(nodeCore);
+				nodeMetrics.setProximity(proximity);
+				nodeMetrics.setProjectid(projectid);
+				nodeMetricsList.add(nodeMetrics);
 				
 		}
 			//nodeMetricsService.addNodeMetricsBylist(nodeMetricsList);
 			System.out.println("nodemetrics存入数据库 完成");
+			return nodeMetricsList;
 	   }
 		
 		/**
 		 *计算输入粒度的网络的度量，并存入数据库
 		 */
-		public void getNetworkMetrics(){
+		public Networkmetrics getNetworkMetrics(int projectid){
 			//////////以下全是网络度量///////////
 			System.out.println("开始计算网络级别的复杂网络度量");
 			
@@ -212,7 +234,19 @@ public class PropertyComputing {
 			}
 			*/
 			
+			Networkmetrics networkmetrics=new Networkmetrics();
+			networkmetrics.setVertexnum(vertexNum);
+			networkmetrics.setEdgenum(edgeNum);
+			networkmetrics.setNetworkdiameter(networkDiameter);
+			networkmetrics.setNetworkcoreness(networkCoreness);
+			networkmetrics.setNodeaveragedegree(nodeAverageDegree);
+			networkmetrics.setAverageshortestpathlength(averageShortestPathLength);
+			networkmetrics.setNetworkefficiency(networkEfficiency);
+			networkmetrics.setNetworkclusteringcoefficient(networkClusteringCoefficient);
+			networkmetrics.setProjectid(projectid);
 			System.out.println("网络级度量存入数据库  完成");
+			return networkmetrics;
+					
 		}
 		
 		

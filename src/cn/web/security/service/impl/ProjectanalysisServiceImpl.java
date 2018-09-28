@@ -147,6 +147,8 @@ public class ProjectanalysisServiceImpl implements ProjectanalysisService {
 	public List<Functions> getFunctions(int id) {
 		// TODO Auto-generated method stub
 		FunctionsExample example = new FunctionsExample();
+		FunctionsExample.Criteria criteria=example.createCriteria();
+		criteria.andProjectidEqualTo(id);
 		List<Functions> list = new ArrayList<Functions>();
 		list = functionsMapper.selectByExample(example);
 		
@@ -157,6 +159,8 @@ public class ProjectanalysisServiceImpl implements ProjectanalysisService {
 	public List<Callfunction> getCallfunctions(int id) {
 		// TODO Auto-generated method stub
 		CallfunctionExample example = new CallfunctionExample();
+		CallfunctionExample.Criteria criteria=example.createCriteria();
+		criteria.andProjectidEqualTo(id);
 		List<Callfunction> list = new ArrayList<Callfunction>();
 		list = callfunctionMapper.selectByExample(example);
 		return list;

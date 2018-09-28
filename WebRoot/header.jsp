@@ -20,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <ul class="nav navbar-nav">
                 <li ><a href="index.jsp"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;后台首页</a></li>
                 <li><a href="${pageContext.request.contextPath}/project/queryProjects1"><span class="glyphicon glyphicon-blackboard"></span>&nbsp;&nbsp;项目解析</a></li>
-                <li><a href="content.html"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;内容管理</a></li>
+                <li><a href="${pageContext.request.contextPath}/project/queryProjects2"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;软件网络构架与特性分析</a></li>
                 <li><a href="tag.html"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;标签管理</a></li>
                   <li class="dropdown ">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;我的管理<span class="caret"></span></a>

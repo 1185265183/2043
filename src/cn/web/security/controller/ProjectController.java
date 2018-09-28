@@ -145,6 +145,25 @@ public class ProjectController {
 		return mv;
 	}
 	
+	@RequestMapping("/queryProjects2")
+	public ModelAndView queryProjects2(@ModelAttribute("condition")Project project,
+			@RequestParam(value="pageNum",
+			required=false,defaultValue="1")int pageNum){
+		
+		ModelAndView mv = new ModelAndView();
+		//先设置分页的拦截参数
+		PageHelper.startPage(pageNum, PAGE_SIZE);
+		
+		List<Project> list = projectService.findProjects(project);
+		mv.addObject("projectList", list);
+		
+		//获取PageInfo分页bean
+		PageInfo pageInfo = new PageInfo<>(list);
+		mv.addObject("pageInfo", pageInfo);
+		mv.setViewName("networkProject");
+		
+		return mv;
+	}
 	@RequestMapping("/toUpdate/{projectid}")
 	public ModelAndView toUpdate(@PathVariable int projectid){
 		
